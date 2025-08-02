@@ -1,0 +1,74 @@
+<div class="search">
+    <form class="form-inline">
+<!--        <input type="text" value="{$req['admin_user_id']??''}" name="admin_user_id" placeholder="搜索ID" class="form-control">-->
+<!--        <input type="text" value="{$req['account']??''}" name="account" placeholder="搜索账号" class="form-control">-->
+<!--        <select name="status" class="form-control">-->
+<!--            <option value="">搜索状态</option>-->
+<!--            <option <?php if (isset($req['status']) && $req['status'] === '0'){echo 'selected = "selected"';} ?> value="0">禁用</option>-->
+<!--            <option <?php if (isset($req['status']) && $req['status'] === '1'){echo 'selected = "selected"';} ?> value="1">正常</option>-->
+<!--        </select>-->
+<!--        <input class="btn btn-flat btn-primary m_10" type="submit" value="搜索">-->
+        <a {:auth_show_judge('Ranking/showRanking')} class="btn btn-flat btn-success m_10 f_r" href="{:url('admin/Ranking/showRanking')}"><i class="fa fa-plus m-r-10"></i>添 加</a>
+    </form>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-bordered table-hover table-striped">
+                        <tbody>
+                        <tr>
+                            <th>排名</th>
+                            <th>用户名</th>
+                            <th>用户手机号</th>
+                            <th>直推人数/投资金额</th>
+                            <th>类型</th>
+
+                            <th>创建时间</th>
+                            <th>操作</th>
+                        </tr>
+                        <?php foreach ($data as $k => $v){ ?>
+                            <tr>
+                                <td>{$v['rank']}</td>
+
+                                <td>{$v['user_name']}</td>
+                                <td>{$v['phone']}</td>
+                                <td>{$v['direct_push_count']}</td>
+                                {if $v['type']==1} <td>直推</td>{/if}
+                                {if $v['type']==2} <td>投资</td>{/if}
+                                <td>{$v['created_at']}</td>
+                                <td>
+                                    <a {:auth_show_judge('Ranking/showRanking')} class="btn btn-flat btn-info btn-xs" href="{:url('admin/Ranking/showRanking', ['id' => $v['id']])}"><i class="fa fa-edit"></i> 编辑</a>
+                                    <a {:auth_show_judge('Ranking/delRanking')} class="btn btn-flat btn-danger btn-xs" href="javascript:;" onclick="delAdminUser({$v['id']})"><i class="fa fa-trash-o"></i> 删除</a>
+                                </td>
+                            </tr>
+                        <?php }?>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function delAdminUser(id)
+    {
+        //确认框
+        layer.confirm('确定删除吗？', {icon: 3, title:'提示'}, function(index) {
+            layer.close(index);
+            $.post('{:url("admin/Ranking/delRanking")}', {id:id}, function (res) {
+                if (res.code == '200'){
+                    location.reload(true);
+                }
+                else {
+                    layer.msg(res.msg, {icon: 5, time: 3000});
+                }
+            });
+        });
+    }
+
+</script>

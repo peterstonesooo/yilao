@@ -1,0 +1,54 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-bordered table-hover table-striped">
+                        <tbody>
+                        <tr>
+                            <th>ID</th>
+                            <th>会员</th>
+
+                            <th>变化前的余额</th>
+                            <th>变动金额</th>
+                            <th>变化后的余额</th>
+                            <th>备注</th>
+                            <th>关联id</th>
+
+                            <th>创建时间</th>
+                        </tr>
+                        <?php foreach ($data as $k => $v) { ?>
+                            <tr>
+                                <td>{$v['id']}</td>
+                                <td>{$v['phone']}</td>
+                                <td>{$v['before_balance']}</td>
+                                <td>{$v['change_balance']}</td>
+                                <td>{$v['after_balance']}</td>
+                                <td>{$v['remark']}</td>
+                                <td>{$v['relation_id']}</td>
+                                <td>{$v['created_at']}</td>
+                            </tr>
+                        <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="text-align:center;font-size: 14px;"><?php echo $data->render(); ?> <h5>总 {$data->total()}</h5></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        //日期范围限制
+        var start = {
+            elem: '#start',
+            format: 'yyyy-MM-dd',
+        };
+        var end = {
+            elem: '#end',
+            format: 'yyyy-MM-dd',
+        };
+        laydate.render(start);
+        laydate.render(end);
+    });
+</script>

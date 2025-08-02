@@ -1,0 +1,82 @@
+<div class="search">
+    <form class="form-inline" id="fileUploadForm">
+        <input type="file" name="file" id="file">
+        <input class="btn btn-flat btn-primary m_10" type="button" value="上传" id="uploadBtn">
+    </form>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <a href="/import.xlsx">查看示例文件</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-bordered table-hover table-striped">
+                        <tbody id="body">
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#uploadBtn').click(function() {
+            var formData = new FormData($('#fileUploadForm')[0]);
+            $.ajax({
+                url: '/User/importSubmit', // 替换为你的服务器端点
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function(response) {
+                    console.log('File uploaded successfully:', response);
+                    $("#body").html('');
+                    $.each(response.data, function(i, val) {
+                        var multyData = "";
+                        var checkedStatus = "checked='checked'";
+                        if (val.head) {
+                            //multyData = "style='background-color:#eb5234'";
+                            checkedStatus = '';
+                        }
+                        var row = $("<tr " + multyData + "><td><input type='checkbox' name='' data-id='"+val.id+"' data-amount='"+val.amount+"' data-remark='"+val.remark+"' " + checkedStatus + "></td>" + "<td>" + val.realname + "</td>"+"<td>"+val.phone+"</td>" + "<td>" + val.amount + "</td>" + "<td>" + val.remark + "</td>" + "</tr>");
+                        $("#body").append(row);
+                    })
+                    $("#body").append($("<tr><td></td><td><input class='btn btn-flat btn-primary m_10' type='button' value='确认提交' id='upBalance'></td></tr>"));
+                },
+                error: function(xhr, status, error) {
+                    console.error('File upload failed:', status, error);
+                }
+            });
+        });
+
+        $(document).on('click', '#upBalance', function() {
+            var checkedValues = $('input[type="checkbox"]:checked').map(function() {
+                return {'id': $(this).attr('data-id'), 'amount': $(this).attr('data-amount'), 'remark': $(this).attr('data-remark')};
+            }).get();
+            console.log(checkedValues)
+            $.ajax({
+                url: "/User/importExec",
+                type: 'post',
+                dataType: 'json',
+                data: {'ids': checkedValues},
+                success: function(response) {
+                    console.log(response)
+                    if (response.code == 200) {
+                        $("#body").html('');
+                        alert('操作成功')
+                    }
+                },error: function(e) {
+                    console.log(e)                    
+                }
+            })
+        })
+    });
+</script>

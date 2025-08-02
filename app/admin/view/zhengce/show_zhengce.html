@@ -1,0 +1,259 @@
+<div class="search">
+    <form class="form-inline">
+        <a class="btn btn-flat btn-primary m_10_l_0" href="{:url('admin/User/userList')}">显示全部</a>
+        <a class="btn btn-flat btn-success m_10 f_r" onclick="javascript:history.back(-1)"><i
+                    class="fa fa-undo m-r-10"></i>返 回</a>
+    </form>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 col-xs-12">
+        <form id="commentForm">
+            <?php if (!empty($data)) { ?>
+                <input type="hidden" class="form-control" value="{$data['user_id']}" name="user_id">
+            <?php } ?>
+            <div class="box box-body">
+
+                <div class="row dd_input_group">
+                    <div class="form-group">
+                        <label class="col-xs-4 col-sm-2 col-md-2 col-lg-1 control-label dd_input_l">姓名</label>
+                        <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4">
+                            <input type="text" name="realname" class="form-control" placeholder="请输入姓名"
+                                   value="{$data['realname']??''}">
+                        </div>
+                        <div class="col-xs-1 col-sm-4 col-md-6 col-lg-6 dd_ts">*</div>
+                    </div>
+                </div>
+                <div class="row dd_input_group">
+                    <div class="form-group">
+                        <label class="col-xs-4 col-sm-2 col-md-2 col-lg-1 control-label dd_input_l">手机号</label>
+                        <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4">
+                            <input type="text" name="phone" class="form-control" placeholder="请输入手机号码"
+                                   value="{$data['phone']??''}">
+                        </div>
+                        <div class="col-xs-1 col-sm-4 col-md-6 col-lg-6 dd_ts">*</div>
+                    </div>
+                </div>
+                <div class="row dd_input_group">
+                    <div class="form-group">
+                        <label class="col-xs-4 col-sm-2 col-md-2 col-lg-1 control-label dd_input_l">身份证</label>
+                        <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4">
+                            <input type="text" name="ic_number" class="form-control" placeholder="请输入身份证"
+                                   value="{$data['ic_number']??''}">
+                        </div>
+                        <div class="col-xs-1 col-sm-4 col-md-6 col-lg-6 dd_ts">*</div>
+                    </div>
+                </div>
+
+                <div class="row dd_input_group">
+                    <div class="form-group">
+                        <label class="col-xs-4 col-sm-2 col-md-2 col-lg-1 control-label dd_input_l">地址</label>
+                        <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4">
+                            <input type="text" name="address" class="form-control" placeholder="请输入地址"
+                                   value="{$data['address']??''}">
+                        </div>
+                        <div class="col-xs-1 col-sm-4 col-md-6 col-lg-6 dd_ts">*</div>
+                    </div>
+                </div>
+
+                <div class="row dd_input_group">
+                    <div class="form-group">
+                        <label class="col-xs-4 col-sm-2 col-md-2 col-lg-1 control-label dd_input_l">机关单位</label>
+                        <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4">
+                            <select name="agency_unit" class="form-control">
+                                <option value="0" {if isset($data['agency_unit']) && $data['agency_unit'] == 0}selected{/if}>否</option>
+                                <option value="1" {if isset($data['agency_unit']) && $data['agency_unit'] == 1}selected{/if}>是</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-1 col-sm-4 col-md-6 col-lg-6 dd_ts">*</div>
+                    </div>
+                </div>
+                <div class="row dd_input_group">
+                    <div class="form-group">
+                        <label class="col-xs-4 col-sm-2 col-md-2 col-lg-1 control-label dd_input_l">机关单位人数</label>
+                        <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4">
+                            <input type="number" name="agency_unit_count" class="form-control" placeholder="请输入人数"
+                                   value="{$data['agency_unit_count']??0}" min="0" oninput="this.value = this.value.replace(/\D/g, '')">
+                        </div>
+                        <div class="col-xs-1 col-sm-4 col-md-6 col-lg-6 dd_ts">*</div>
+                    </div>
+                </div>
+
+                <div class="row dd_input_group">
+                    <div class="form-group">
+                        <label class="col-xs-4 col-sm-2 col-md-2 col-lg-1 control-label dd_input_l">事业单位</label>
+                        <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4">
+                            <select name="public_institution" class="form-control">
+                                <option value="0" {if isset($data['public_institution']) && $data['public_institution'] == 0}selected{/if}>否</option>
+                                <option value="1" {if isset($data['public_institution']) && $data['public_institution'] == 1}selected{/if}>是</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-1 col-sm-4 col-md-6 col-lg-6 dd_ts">*</div>
+                    </div>
+                </div>
+                <div class="row dd_input_group">
+                    <div class="form-group">
+                        <label class="col-xs-4 col-sm-2 col-md-2 col-lg-1 control-label dd_input_l">事业单位人数</label>
+                        <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4">
+                            <input type="number" name="public_institution_count" class="form-control" placeholder="请输入人数"
+                                   value="{$data['public_institution_count']??0}" min="0" oninput="this.value = this.value.replace(/\D/g, '')">
+                        </div>
+                        <div class="col-xs-1 col-sm-4 col-md-6 col-lg-6 dd_ts">*</div>
+                    </div>
+                </div>
+
+                <div class="row dd_input_group">
+                    <div class="form-group">
+                        <label class="col-xs-4 col-sm-2 col-md-2 col-lg-1 control-label dd_input_l">退伍军人</label>
+                        <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4">
+                            <select name="veteran" class="form-control">
+                                <option value="0" {if isset($data['veteran']) && $data['veteran'] == 0}selected{/if}>否</option>
+                                <option value="1" {if isset($data['veteran']) && $data['veteran'] == 1}selected{/if}>是</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-1 col-sm-4 col-md-6 col-lg-6 dd_ts">*</div>
+                    </div>
+                </div>
+                <div class="row dd_input_group">
+                    <div class="form-group">
+                        <label class="col-xs-4 col-sm-2 col-md-2 col-lg-1 control-label dd_input_l">退伍军人人数</label>
+                        <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4">
+                            <input type="number" name="veteran_count" class="form-control" placeholder="请输入人数"
+                                   value="{$data['veteran_count']??0}" min="0" oninput="this.value = this.value.replace(/\D/g, '')">
+                        </div>
+                        <div class="col-xs-1 col-sm-4 col-md-6 col-lg-6 dd_ts">*</div>
+                    </div>
+                </div>
+
+
+                <div class="row dd_input_group">
+                    <div class="form-group">
+                        <label class="col-xs-4 col-sm-2 col-md-2 col-lg-1 control-label dd_input_l">残疾人</label>
+                        <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4">
+                            <select name="disabled" class="form-control">
+                                <option value="0" {if isset($data['disabled']) && $data['disabled'] == 0}selected{/if}>否</option>
+                                <option value="1" {if isset($data['disabled']) && $data['disabled'] == 1}selected{/if}>是</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-1 col-sm-4 col-md-6 col-lg-6 dd_ts">*</div>
+                    </div>
+                </div>
+                <div class="row dd_input_group">
+                    <div class="form-group">
+                        <label class="col-xs-4 col-sm-2 col-md-2 col-lg-1 control-label dd_input_l">残疾人人数</label>
+                        <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4">
+                            <input type="number" name="disabled_count" class="form-control" placeholder="请输入人数"
+                                   value="{$data['disabled_count']??0}" min="0" oninput="this.value = this.value.replace(/\D/g, '')">
+                        </div>
+                        <div class="col-xs-1 col-sm-4 col-md-6 col-lg-6 dd_ts">*</div>
+                    </div>
+                </div>
+
+                <div class="row dd_input_group">
+                    <div class="form-group">
+                        <label class="col-xs-4 col-sm-2 col-md-2 col-lg-1 control-label dd_input_l">贫困户</label>
+                        <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4">
+                            <select name="poor_household" class="form-control">
+                                <option value="0" {if isset($data['poor_household']) && $data['poor_household'] == 0}selected{/if}>否</option>
+                                <option value="1" {if isset($data['poor_household']) && $data['poor_household'] == 1}selected{/if}>是</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-1 col-sm-4 col-md-6 col-lg-6 dd_ts">*</div>
+                    </div>
+                </div>
+                <div class="row dd_input_group">
+                    <div class="form-group">
+                        <label class="col-xs-4 col-sm-2 col-md-2 col-lg-1 control-label dd_input_l">贫困户人数</label>
+                        <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4">
+                            <input type="number" name="poor_household_count" class="form-control" placeholder="请输入人数"
+                                   value="{$data['poor_household_count']??0}" min="0" oninput="this.value = this.value.replace(/\D/g, '')">
+                        </div>
+                        <div class="col-xs-1 col-sm-4 col-md-6 col-lg-6 dd_ts">*</div>
+                    </div>
+                </div>
+
+                <div class="row dd_input_group">
+                    <div class="form-group">
+                        <label class="col-xs-4 col-sm-2 col-md-2 col-lg-1 control-label dd_input_l">农村户口</label>
+                        <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4">
+                            <select name="rural_household" class="form-control">
+                                <option value="0" {if isset($data['rural_household']) && $data['rural_household'] == 0}selected{/if}>否</option>
+                                <option value="1" {if isset($data['rural_household']) && $data['rural_household'] == 1}selected{/if}>是</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-1 col-sm-4 col-md-6 col-lg-6 dd_ts">*</div>
+                    </div>
+                </div>
+                <div class="row dd_input_group">
+                    <div class="form-group">
+                        <label class="col-xs-4 col-sm-2 col-md-2 col-lg-1 control-label dd_input_l">农村户口人数</label>
+                        <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4">
+                            <input type="number" name="rural_household_count" class="form-control" placeholder="请输入人数"
+                                   value="{$data['rural_household_count']??0}" min="0" oninput="this.value = this.value.replace(/\D/g, '')">
+                        </div>
+                        <div class="col-xs-1 col-sm-4 col-md-6 col-lg-6 dd_ts">*</div>
+                    </div>
+                </div>
+
+                <div class="row dd_input_group">
+                    <div class="form-group">
+                        <label class="col-xs-4 col-sm-2 col-md-2 col-lg-1 control-label dd_input_l">中国梦事业</label>
+                        <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4">
+                            <select name="chinese_dream_cause" class="form-control">
+                                <option value="0" {if isset($data['chinese_dream_cause']) && $data['chinese_dream_cause'] == 0}selected{/if}>否</option>
+                                <option value="1" {if isset($data['chinese_dream_cause']) && $data['chinese_dream_cause'] == 1}selected{/if}>是</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-1 col-sm-4 col-md-6 col-lg-6 dd_ts">*</div>
+                    </div>
+                </div>
+                <div class="row dd_input_group">
+                    <div class="form-group">
+                        <label class="col-xs-4 col-sm-2 col-md-2 col-lg-1 control-label dd_input_l">中国梦事业人数</label>
+                        <div class="col-xs-7 col-sm-6 col-md-4 col-lg-4">
+                            <input type="number" name="chinese_dream_cause_count" class="form-control" placeholder="请输入人数"
+                                   value="{$data['chinese_dream_cause_count']??0}" min="0" oninput="this.value = this.value.replace(/\D/g, '')">
+                        </div>
+                        <div class="col-xs-1 col-sm-4 col-md-6 col-lg-6 dd_ts">*</div>
+                    </div>
+                </div>
+
+                <div class="row dd_input_group">
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-8 col-md-6 col-lg-5 text-center">
+                            <button type="button" class="btn btn-flat btn-primary" onclick="sub()">提 交</button>
+                            <button type="button" class="btn btn-flat btn-default"
+                                    onclick="javascript:history.back(-1)">返 回
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        var url = "{:url('admin/User/userList')}";
+        $('a[href="' + url + '"]').parents('.menu-li').addClass('active');
+        var headerText = $('a[href="' + url + '"]').children('span').text();
+        var is_add = "<?php echo !empty($data) ? '0' : '1';?>";
+        var headerTitle = is_add == "1" ? headerText + '-添加' : headerText + '-编辑';
+        $('#content-header-title').text(headerTitle);
+    });
+
+    function sub()
+    {
+        $.post('<?php echo url("admin/Zhengce/editZhengce");?>', $('#commentForm').serialize(), function (res) {
+            if (res.code == '200') {
+                layer.msg(res.msg, {icon: 1, time: 3000});
+                // window.location.href = document.referrer;
+            } else {
+                layer.msg(res.msg, {icon: 5, time: 3000});
+            }
+        });
+    }
+
+
+</script>

@@ -1,0 +1,102 @@
+<div class="search">
+    <form class="form-inline">
+        <input placeholder="开始时间" autocomplete="off" value="{$req['start_date']??''}" name="start_date" class="form-control layer-date" id="start">
+        ～
+        <input placeholder="结束时间" autocomplete="off" value="{$req['end_date']??''}" name="end_date" class="form-control layer-date" id="end">
+
+
+        <input type="text" value="{$req['phone']??''}" name="phone" placeholder="搜索手机号" class="form-control">
+        <select name="audit_type" class="form-control">
+            <option value="" >类型</option>
+            <option <?php if (isset($req['audit_type']) && $req['audit_type'] !== '' && $req['audit_type'] == 1) {
+                    echo 'selected = "selected"'; } ?> value="1">本人</option>
+            <option <?php if (isset($req['audit_type']) && $req['audit_type'] !== '' && $req['audit_type'] == 2) {
+                    echo 'selected = "selected"'; } ?> value="2">家庭</option>
+        </select>
+        <input class="btn btn-flat btn-primary m_10" type="submit" value="搜索">
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;共 {$total_num} 条记录</span>
+
+    </form>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-bordered table-hover table-striped">
+                        <tbody>
+                        <tr>
+                            <th>ID</th>
+                            <th>姓名</th>
+                            <th>审核类型</th>
+                            <th>手机号</th>
+
+                            <th>身份证</th>
+<!--                            <th>手持身份证</th>-->
+                            <th>状态</th>
+                            <th>提交时间</th>
+
+                            <th>操作</th>
+                        </tr>
+                        <?php foreach ($data as $k => $v) { ?>
+                            <tr>
+                                <td>{$v['id']}</td>
+                                <td>{$v['realname']}</td>
+                                {if $v['audit_type']==1} <td>本人</td>{else /}<td>家庭成员</td>{/if}
+                                <td>{$v['phone']}</td>
+                                <td><a href="{$v['id_card_front']}" target="_blank"><img src="{$v['id_card_front']}" alt="" width="50" height="50"></a></td>
+
+                                <td><?php if($v['status'] == 1){echo '审核中';}elseif($v['status']==2){echo '审核通过';}elseif($v['status'] == 3){echo '已拒绝';}?></td>
+                                <td>{$v['created_at']}</td>
+
+                                <td>
+
+                                    <button {:auth_show_judge('User/audit_reject')} class="btn btn-flat btn-xs" href="{:url('admin/User/audit_reject', ['id' => $v['id']])}" onclick="audit_reject({$v['id']})">驳回</button>
+
+                                </td>
+                            </tr>
+                        <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="text-align:center;font-size: 14px;"><?php echo $data->render(); ?></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(function () {
+        //日期范围限制
+        var start = {
+            elem: '#start',
+            format: 'yyyy-MM-dd',
+        };
+        var end = {
+            elem: '#end',
+            format: 'yyyy-MM-dd',
+        };
+
+
+        laydate.render(start);
+        laydate.render(end);
+
+    });
+    function audit_reject(id)
+    {
+        $.post('<?php echo url("admin/User/audit_reject") ?>', {id: id}, function (res) {
+            if (res.code == '200') {
+                window.location.reload();
+            } else {
+                layer.msg(res.msg, {icon: 5, time: 3000});
+            }
+        });
+    }
+
+</script>
+<style>
+    th{
+        font-size: 14px;
+    }
+</style>
