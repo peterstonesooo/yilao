@@ -8,16 +8,11 @@
 /public/.user.ini
 /*.sql
 /composer.lock.bak
-/.well-known/acme-challenge/h1PVSottpXWnP_wkzW-p34bdRv6BCTB2eWN5pxnt3kc
-/.well-known/acme-challenge/lloeZVNh4mSyuu9D5tmyT8mxlRDZ-MTR7Jdtw1rQzSo
 /app/common/command/CheckBonus_old2.php
 /public/chatlink.html
 /test/TestCheckBonus.php
 /vendor/bin/.phpunit.result.cache
 /config/cache.php
 /config/app.php
-.well-known/acme-challenge/
 
 export/
-
-public/.well-known/acme-challenge/
