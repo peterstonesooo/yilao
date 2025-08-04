@@ -66,11 +66,13 @@ class CommonController extends BaseController
             Session::set('google_auth_secret', $adminUser);
             $setting = Setting::where("key",'is_google_auth')->value('value');
 
-            if(!$setting){
+             $auth['value'] = 1; // 测试环境关闭 谷歌验证
+            if ($auth['value'] == '1') {
+                Session::set('google_auth_secret', $adminUser);
+                return out(['isValid' => 1]);
+            } else {
                 Session::set('admin_user', $adminUser);
                 return out(['isValid' => 0]);
-            }else{
-                return out(['isValid' => 1]);
             }
         }
 
